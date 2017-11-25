@@ -1,0 +1,6 @@
+{
+    "require": {
+        "catfan/Medoo": "^1.4",
+        "phpmailer/phpmailer": "^6.0"
+    }
+}
