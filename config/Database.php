@@ -36,34 +36,7 @@ function Register($array){
 
             if($query->errorCode() == "00000")
             {
-                /*$mail = new PHPMailer(true);                              // Passing `true` enables exceptions
-                try {
-                    //Server settings
-                    $mail->SMTPDebug = 0;                                 // Enable verbose debug output
-                    $mail->isSMTP();                                      // Set mailer to use SMTP
-                    $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-                    $mail->SMTPAuth = true;                               // Enable SMTP authentication
-                    $mail->Username = 'testemail4814g5g6@gmail.com';                 // SMTP username
-                    $mail->Password = 'testmail';                           // SMTP password
-                    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-                    $mail->Port = 587 ;                                    // TCP port to connect to
-
-                    //Recipients
-                    $mail->setFrom('testemail4814g5g6@gmail.com', 'flow.cf');
-                    $mail->addAddress($email);               // Name is optional
-                    $mail->addReplyTo('testemail4814g5g6@gmail.com', 'flow.cf');
-
-                    //Content
-                    $mail->isHTML(true);                                  // Set email format to HTML
-                    $mail->Subject = 'Welcome to NosTale';
-                    $mail->Body    = 'Welcome '. $username .', <br> your Register is now done you can login now with your Account Data ingame!';
-                    $mail->AltBody = 'Welcome '. $username .', your Register is now done you can login now with your Account Data ingame!';
-
-                    $mail->send();
-                }
-                catch (Exception $e) {
-                    
-                }*/
+                
                 echo '<meta http-equiv="refresh" content="0; url=../index.php?reg=success" />';
             }
 
