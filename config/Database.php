@@ -14,40 +14,85 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 function Register($array){
-
-        $Config = new Config();
-        $username = $array['username'];
-        $password = $array['password'];
-        $email = $array['email'];
-
-
-        $database = new Medoo(array('database_type' => 'mssql','database_name' => $Config->DBSCHEMA ,'server' => $Config->DBHOST ,'username' => $Config->DBUSER ,'password' => $Config->DBPW , 'option' => [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION] ));
-        $count = $database->count("Account",["Name"],
-                       ["Name" => $username]);
-        if($count == 0){
-            $query = $database->insert('Account',[
-                "Name" => $username,
-                "Password" => strtoupper(hash('sha512',$password)),
-                "Email" => $email,
-                "Authority" => "0",
-				"VerificationToken" => "yes",
-                "RegistrationIP" => $_SERVER['REMOTE_ADDR']
-                ]);
-
-            if($query->errorCode() == "00000")
-            {
-                
-                echo '<meta http-equiv="refresh" content="0; url=../index.php?reg=success" />';
-            }
-
-            else
-            {
-                echo $query->errorInfo();
-            }
+		$captcha;
+		$Config = new Config();
+		if(isset($array['g-recaptcha-response'])){
+          $captcha= $array['g-recaptcha-response'];
         }
-        else {
-            echo '<meta http-equiv="refresh" content="0; url=../index.php?reg=fail" />';
-        }
+		if(!$captcha){
+			echo '<meta http-equiv="refresh" content="0; url=../index.php?reg=wrong_captcha" />';
+		}
+		$ip = $_SERVER['REMOTE_ADDR'];
+		$response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$Config->CaptchaPrivateKey."&response=".$captcha."&remoteip=".$ip);
+        $responseKeys = json_decode($response,true);
+		
+		if(intval($responseKeys['success']) !== 1){
+			echo '<meta http-equiv="refresh" content="0; url=../index.php?reg=wrong_captcha" />';
+		}
+		else
+		{
+			
+			$username = $array['username'];
+			$password = $array['password'];
+			$email = $array['email'];
+
+
+			$database = new Medoo(array('database_type' => 'mssql','database_name' => $Config->DBSCHEMA ,'server' => $Config->DBHOST ,'username' => $Config->DBUSER ,'password' => $Config->DBPW , 'option' => [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION] ));
+			$count = $database->count("Account",["Name"],
+						   ["Name" => $username]);
+			if($count == 0){
+				$query = $database->insert('Account',[
+					"Name" => $username,
+					"Password" => strtoupper(hash('sha512',$password)),
+					"Email" => $email,
+					"Authority" => "0",
+					"VerificationToken" => "yes",
+					"RegistrationIP" => $_SERVER['REMOTE_ADDR']
+					]);
+
+				if($query->errorCode() == "00000")
+				{
+					/*$mail = new PHPMailer(true);                              // Passing `true` enables exceptions
+					try {
+						//Server settings
+						$mail->SMTPDebug = 0;                                 // Enable verbose debug output
+						$mail->isSMTP();                                      // Set mailer to use SMTP
+						$mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+						$mail->SMTPAuth = true;                               // Enable SMTP authentication
+						$mail->Username = 'testemail4814g5g6@gmail.com';                 // SMTP username
+						$mail->Password = 'testmail';                           // SMTP password
+						$mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+						$mail->Port = 587 ;                                    // TCP port to connect to
+
+						//Recipients
+						$mail->setFrom('testemail4814g5g6@gmail.com', 'flow.cf');
+						$mail->addAddress($email);               // Name is optional
+						$mail->addReplyTo('testemail4814g5g6@gmail.com', 'flow.cf');
+
+						//Content
+						$mail->isHTML(true);                                  // Set email format to HTML
+						$mail->Subject = 'Welcome to NosTale';
+						$mail->Body    = 'Welcome '. $username .', <br> your Register is now done you can login now with your Account Data ingame!';
+						$mail->AltBody = 'Welcome '. $username .', your Register is now done you can login now with your Account Data ingame!';
+
+						$mail->send();
+					}
+					catch (Exception $e) {
+						
+					}*/
+					echo '<meta http-equiv="refresh" content="0; url=../index.php?reg=success" />';
+				}
+
+				else
+				{
+					echo $query->errorInfo();
+				}
+			}
+			else {
+				echo '<meta http-equiv="refresh" content="0; url=../index.php?reg=fail" />';
+			}
+		}
+        
 }
 
     function Database($type, $username){

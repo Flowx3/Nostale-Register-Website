@@ -64,7 +64,7 @@ class Config
 
 
     public $DBHOST = "localhost";
-    public $DBUSER = "root";
+    public $DBUSER = "";
     public $DBPW = "";
     public $DBSCHEMA = "opennos";
 

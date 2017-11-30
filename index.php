@@ -84,18 +84,22 @@ $Config = new Config();
                         if(!empty($_GET['reg'])){
                             $reg = $_GET['reg'];
                             if($reg =="fail"){
-                                echo '<p><font size="3" color="red"><b>Register failed Please try it again! Dot forget to solve the Captcha.</b></font></p>';
+                                echo '<p><font size="3" color="red"><b>Register failed Please try it again! Please Retry the Register.</b></font></p>';
                             }
                             if($reg =="success"){
                                 echo '<p><b><font size="3" color="green"><b>Register done! You can now Login with your Data.</b></font></p>';
                             }
+							if($reg =="wrong_captcha"){
+								echo '<p><b><font size="3" color="red"><b>Please Check the Captcha!</b></font></p>';
+							}
+							
 
                         }
                        
 
                         ?>
 
-                        <button class="btn_play btn_cta" id="trigger-overlay" name="trigger-overlay" rel="register">Play for Free</button>
+                        <button class="btn_play btn_cta" rel="bottomArea" data-type="scrollto7" id="scrollto7">Play for Free</button>
                         <button class="btn_play btn_cta btn_steam" onclick="location.href='./download/download.php?file=NosTale.exe'">Download</button>
 
 					</div>
@@ -408,7 +412,7 @@ $Config = new Config();
 			                <input type="text" class="registrationInput" name="email" value=""/>
 			                <div class="error_info "></div>
 			            </div>
-
+						<div class="g-recaptcha" data-sitekey="<?php echo $Config->CaptchaPublicKey; ?>"></div>
                         <button class="btn_play" onclick="validateBottom(); return false;">Play for Free</button>
                     </form>
                 </div>
@@ -439,54 +443,6 @@ $Config = new Config();
 				</div>
 			</div>
 		</div>
-		<div id="register">
-            <form name="regForm1" id="regForm1" action="<?php echo $WebsiteURL;?>/register/" method="get">
-                <h4>Register now</h4>
-                <input type="hidden" name="tac" value="tac" />
-                <input type="hidden" name="kid" value="" />
-                <label>Account name:</label>
-                <br />
-                <span>(5-16 characters, no special characters)</span>
-                <div class="input_wrapper">
-                    <input id="usernameInput2" type="text" onblur="validateAjax(event)" class="registrationInput" name="username" value="" />
-                    <div class="error_info "></div>
-                </div>
-
-                <label>Password:</label>
-                <div class="positioner">
-                    <div class="helpIcon" id="helpIcon1"></div>
-                    <div class="password_info password_info2">
-                        <p>
-                            <strong>Recommended for secure password:</strong>
-                        </p>
-                        <ul>
-                            <li>
-                                <span>at least one lowercase letter</span>
-                            </li>
-                            <!--<li><span></span></li>-->
-                            <li>
-                                <span>at least one number</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <br />
-                <span>(4-16 characters, no special characters)</span>
-                <div class="input_wrapper">
-                    <input class="registrationInput" name="password" type="password" autocomplete="off" />
-                    <div class="error_info "></div>
-
-                </div>
-                <label>Email:</label>
-                <div class="input_wrapper">
-                    <input type="text" class="registrationInput" name="email" value="" />
-                    <div class="error_info "></div>
-                </div>
-
-                <button class="btn_play" onclick="validateOverlay(); return false;">Play for Free</button>
-            </form>
-		</div>
-		
 	</div>
 
 	<script type="text/javascript" src="<?php echo $WebsiteURL; ?>/js/2b0b26d7802ac8d236d0b0a79d0219.js"></script>
@@ -668,7 +624,9 @@ $Config = new Config();
 
         GF.addListener(GF.byId("playGameplay"), "click", showScreenshots);
         GF.addListener(GF.byId("playGameplayPhone"), "click", showScreenshots);
-
+		GF.addListener(GF.byId("scrollto7"), "click", function(){
+			scrollManager.scrollIntoView(6)
+		});
         // small screens
         GF.addListener(GF.byId("playTrailerPhone"), "click", function () {
             window.open("<?php echo $Config->YTVideo; ?>");
