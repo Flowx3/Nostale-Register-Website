@@ -742,12 +742,6 @@ $Config = new Config();
             validationOpts
         );
 
-        var validatorOverlay = GF.newValidator(
-            "regForm1",
-            validationLoca,
-            validationOpts
-        );
-
         GF.addListener(GF.byId("moreInfo"), "click", function () {
             if (GF.hasCls(GF.byId('scroll1'), 'active')) {
                 scrollManager.scrollIntoView(1);
