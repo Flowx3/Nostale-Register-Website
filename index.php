@@ -381,7 +381,7 @@ $Config = new Config();
 					<form name="regForm2" id="regForm2" action="<?php echo $WebsiteURL;?>/register" method="get">
 						<h4>Register now</h4>
 						<input type="hidden" name="tac" value="tac"/>
-		            	<input type="hidden" name="kid" value=""/>
+		            	<input type="hidden" name="kid" value="kid"/>
 			            <label>Account name:</label>
 			            <br/><span>(5-16 characters, no special characters)</span>
 			            <div class="input_wrapper">
@@ -423,10 +423,6 @@ $Config = new Config();
 			<div class="inner clearfix">
 				<div class="logos_ranking">
 					<div class="clearfix">
-
-
-
-
 						<a class="usk" target="_blank" href="http://www.usk.de/en/">&nbsp;</a>
 						<a class="pegi" target="_blank" href="http://www.pegi.info/en/index">&nbsp;</a>
 					</div>
@@ -482,7 +478,6 @@ $Config = new Config();
             el = document.getElementById(elName);
             el.value = newName;
             validator.validateForm();
-            validatorOverlay.validateForm();
         }
 
         GF.Validator.prototype.validateUsernameTaken = function (data, el) {
@@ -508,7 +503,6 @@ $Config = new Config();
                     if (data && data !== "") {
                         data = data.replace(/(.*)\{(.*)\}(.*)/, replaceString);
                         validator.validateUsernameTaken(data, eventSrc);
-                        validatorOverlay.validateUsernameTaken(data, eventSrc);
                     } else if (event.detail.doSubmit) {
                         event.detail.validator.form.submit();
                     }
