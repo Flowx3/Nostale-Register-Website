@@ -126,11 +126,11 @@ function Database($type, $username){
 					}
 
 					echo "<tr>\n";
-					echo iconv('Latin1', 'Latin1', "<td>".$char["Name"]."</td>\n");
-					echo "<td>".$char["Level"]."</td>\n";
-					echo "<td>".$char["JobLevel"]."</td>\n";
-					echo "<td>".$Class."</td>\n";
-					echo "</tr>\n";
+					echo iconv('Latin1', 'Latin1', "									<td>".$char["Name"]."</td>\n");
+					echo "									<td>".$char["Level"]."</td>\n";
+					echo "									<td>".$char["JobLevel"]."</td>\n";
+					echo "									<td>".$Class."</td>\n";
+					echo "								</tr>\n";
 				}
 				
 				echo '</tbody>
@@ -182,11 +182,11 @@ function Database($type, $username){
 					}
 					
 					echo "<tr>\n";
-					echo iconv('Latin1', 'Latin1', "<td>".$char["Name"]."</td>\n");
-					echo "<td>".$char["Reputation"]."</td>\n";
-					echo "<td>".$char["Level"]."</td>\n";
-					echo "<td>".$class."</td>\n";
-					echo "</tr>\n";
+					echo iconv('Latin1', 'Latin1', "									<td>".$char["Name"]."</td>\n");
+					echo "									<td>".$char["Reputation"]."</td>\n";
+					echo "									<td>".$char["Level"]."</td>\n";
+					echo "									<td>".$class."</td>\n";
+					echo "								</tr>\n";
 				}
 				
 				echo "</tbody>
